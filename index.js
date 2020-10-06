@@ -9,7 +9,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
@@ -23,11 +22,11 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
 
   const eventCollection = client.db("volunteerNetwork").collection("events");
-  const RegisteredEventCollection = client.db(dbName).collection('registeredEvent');
+  const RegisteredEventCollection = client.db("volunteerNetwork").collection("registeredEvent");
     console.log('data conncet');
     app.post('/addEvent', (req, res) => {
-        const event = req.body;
-        eventCollection.insertOne(event)
+        const events = req.body;
+        eventCollection.insertOne(events)
         .then(result => {
             res.send(result.insertedCount > 0)
         })
@@ -35,7 +34,6 @@ client.connect(err => {
 
     app.post('/addRegisteredEvent', (req, res) => {
         const registeredEvent = req.body;
-        // console.log(registeredEvent);
         RegisteredEventCollection.insertOne(registeredEvent)
         .then(result => {
             res.send(result.insertedCount > 0)
@@ -46,7 +44,7 @@ client.connect(err => {
         res.send('successfully connected');
     })
     
-    app.get('/event', (req, res) => {
+    app.get('/events', (req, res) => {
         eventCollection.find({})
         .toArray((err, documents) => {
             res.send(documents);
