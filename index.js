@@ -43,7 +43,7 @@ client.connect(err => {
     })
 
     app.get('/', (req, res) => {
-        res.send("Hello");
+        res.send('successfully connected');
     })
     
     app.get('/event', (req, res) => {
