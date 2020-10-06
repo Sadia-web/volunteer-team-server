@@ -43,7 +43,7 @@ client.connect(err => {
     })
 
     app.get('/', (req, res) => {
-        res.send("Hey, It is created by Roky Vhai.");
+        res.send("Hello");
     })
     
     app.get('/event', (req, res) => {
